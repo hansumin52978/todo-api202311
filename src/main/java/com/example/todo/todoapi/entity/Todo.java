@@ -17,7 +17,7 @@ public class Todo {
 
     @Id
     @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system.uuid", strategy = "uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
     private String todoId;
 
     @Column(nullable = false, length = 30)
@@ -27,4 +27,5 @@ public class Todo {
 
     @CreationTimestamp
     private LocalDateTime createDate; // 등록 시간
+
 }
