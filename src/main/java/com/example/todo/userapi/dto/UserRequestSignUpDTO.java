@@ -14,7 +14,7 @@ import javax.validation.constraints.Size;
 public class UserRequestSignUpDTO {
 
     @NotBlank
-    @Email // @가 들어갔는지 등 검증 해주는 어노테이션
+    @Email
     private String email;
 
     @NotBlank
@@ -23,15 +23,28 @@ public class UserRequestSignUpDTO {
 
     @NotBlank
     @Size(min = 2, max = 6)
-    private String username;
+    private String userName;
 
     // dto를 Entity로 변경하는 메서드
     public User toEntity() {
         return User.builder()
                 .email(this.email)
                 .password(this.password)
-                .userName(this.username)
+                .userName(this.userName)
                 .build();
     }
 
+
 }
+
+
+
+
+
+
+
+
+
+
+
+

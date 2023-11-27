@@ -8,8 +8,7 @@ import java.time.LocalDateTime;
 
 @Setter @Getter
 @ToString @EqualsAndHashCode(of = "email")
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor @AllArgsConstructor
 @Builder
 public class UserSignUpResponseDTO {
 
