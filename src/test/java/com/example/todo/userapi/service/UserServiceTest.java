@@ -1,6 +1,6 @@
 package com.example.todo.userapi.service;
 
-import com.example.todo.userapi.dto.UserRequestSignUpDTO;
+import com.example.todo.userapi.dto.request.UserRequestSignUpDTO;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,16 +27,27 @@ class UserServiceTest {
 
         UserRequestSignUpDTO dto = UserRequestSignUpDTO.builder()
                 .email(email)
-                .password("hihi")
-                .username("byebye")
+                .password("asdasd")
+                .userName("sjabdjasb")
                 .build();
         //when
         //then
-        // param1: 어떤 에러가 발생학지 에러 클래스를 적용.
+        // param1: 어떤 에러가 발생할지 에러 클래스를 적음.
         // param2: 에러가 발생하는 상황을 전달.
         assertThrows(RuntimeException.class,
                 () -> userService.create(dto)
-        ); // 예외가 발생할 것을 단언
+        );
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+

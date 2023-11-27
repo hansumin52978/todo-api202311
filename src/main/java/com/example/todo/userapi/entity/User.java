@@ -36,16 +36,3 @@ public class User {
     private LocalDateTime joinDate;
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
