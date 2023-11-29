@@ -1,6 +1,8 @@
 package com.example.todo.userapi.dto.request;
 
 import lombok.*;
+
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 @Setter @Getter
@@ -10,6 +12,7 @@ import javax.validation.constraints.NotBlank;
 public class LoginRequestDTO {
 
     @NotBlank
+    @Email
     private String email;
 
     @NotBlank
