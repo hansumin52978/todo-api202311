@@ -1,4 +1,4 @@
-package com.example.todo.todoapi.controller;
+package com.example.todo.todoapi.api;
 
 import com.example.todo.auth.TokenUserInfo;
 import com.example.todo.todoapi.dto.request.TodoCreateRequestDTO;
@@ -7,6 +7,7 @@ import com.example.todo.todoapi.dto.response.TodoListResponseDTO;
 import com.example.todo.todoapi.service.TodoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
@@ -39,10 +40,15 @@ public class TodoController {
         }
 
         try {
-            TodoListResponseDTO responseDTO = todoService.create(requestDTO, userInfo.getUserId());
+            TodoListResponseDTO responseDTO = todoService.create(requestDTO, userInfo);
             return ResponseEntity
                     .ok()
                     .body(responseDTO);
+        } catch (IllegalStateException e) {
+            // 권한 때문에 발생한 예외
+            log.warn(e.getMessage());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(e.getMessage());
         } catch (RuntimeException e) {
             e.printStackTrace();
             return ResponseEntity
@@ -59,9 +65,8 @@ public class TodoController {
     public ResponseEntity<?> retrieveTodoList(
             // JwtAuthFilter에서 시큐리티에게 전역적으로 사용할 수 있는 인증 정보를 등록해 놓았기 때문에
             // @AuthenticationPrincipal을 통해 토큰에 인증된 사용자 정보를 불러올 수 있다.
-            // 토큰에 인증된 사용자 정보를 불러올 수 있다.
             @AuthenticationPrincipal TokenUserInfo userInfo
-            ) {
+    ) {
         log.info("/api/todos GET request");
         TodoListResponseDTO responseDTO = todoService.retrieve(userInfo.getUserId());
 
@@ -78,7 +83,8 @@ public class TodoController {
 
         if(todoId == null || todoId.trim().equals("")) {
             return ResponseEntity
-                    .badRequest().body(TodoListResponseDTO
+                    .badRequest()
+                    .body(TodoListResponseDTO
                             .builder()
                             .error("ID를 전달해 주세요.")
                             .build());
@@ -91,7 +97,6 @@ public class TodoController {
             return ResponseEntity
                     .internalServerError().body(TodoListResponseDTO.builder().error(e.getMessage()).build());
         }
-
     }
 
     // 할 일 수정하기
@@ -102,9 +107,10 @@ public class TodoController {
             BindingResult result,
             HttpServletRequest request
     ) {
-        if (result.hasErrors()) {
+        if(result.hasErrors()) {
             return ResponseEntity.badRequest().body(result.getFieldError());
         }
+
         log.info("/api/todos {} request!", request.getMethod());
         log.info("modifying dto: {}", requestDTO);
 
@@ -120,5 +126,19 @@ public class TodoController {
                             .build());
         }
 
+
     }
+
+
+
+
 }
+
+
+
+
+
+
+
+
+
