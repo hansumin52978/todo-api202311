@@ -29,6 +29,11 @@ springdoc:
 jwt:
   secret: XZM4Y1zZ9JKUhZRBPHRo+lsRzLh209pF13UIO6uU8O6823GuCGJkKJnaZSfpFW1mTCUz+U1vQXZQAazNzX5xqg==
 
+kakao:
+  client_id: f06364f9ea628d5ab274fc1d16629123
+  redirect_url: http://localhost:3000/oauth/redirected/kakao
+  client_secret: lo98OLSUya1zUcqnKM8HIW3JFJvSGR44
+
 # 업로드 파일 저장 경로
 upload:
   path: C:/todo_upload
